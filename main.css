@@ -1,0 +1,214 @@
+* {
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #83a4d4;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #b6fbff, #83a4d4);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    width: 1200px;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.content {
+    display: flex;
+    width: 900px;
+    margin: 20px auto;
+    align-items: center;
+    gap: 10px;
+}
+
+.left_content {
+    position: relative;
+    width: 30%;
+    background-color: rgba(250, 235, 215, 0.664);
+    overflow: auto;
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #83a3d4a1;
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-track {}
+
+.left_content, .right_content {
+    height: 500px;
+    min-height: 500px;
+    border-radius: 2px;
+}
+
+
+.friend_container {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    background-color: aliceblue;
+    margin: 5px auto;
+    padding: 8px;
+    border-radius: 7px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    transition: all linear 0.12s;
+    cursor: pointer;
+}
+
+.friend_container:hover {
+    filter: brightness(0.95);
+}
+
+.friend_container img, .info img {
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.name_friend {
+    margin-left: 10px;
+}
+
+.search_bar {
+    width: 100%;
+    padding: 20px 10px;
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+    position: sticky;
+    top: 0px;
+    z-index: 10;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.search_bar input, .input-mes input {
+    width: 100%;
+    height: 30px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    transition: all 0.1s ease-in;
+    outline: 2px solid transparent;
+    font-size: 18px;
+}
+
+.right_content {
+    position: relative;
+    flex: 1;
+    border-radius: 2px;
+    background-color: rgba(0, 0, 0, 0.192);
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-mes {
+    flex: 1;
+    display: flex;
+}
+
+.input-mes input {
+    height: 100%;
+    width: 92%;
+}
+
+.input-mes button {
+    display: block;
+    height: 100%;
+    flex: 1;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    font-size: 25px;
+    border-radius: 2px;
+    transition: all 0.12s linear;
+    color: #83a4d4;
+    background-color: white;
+}
+
+.input-mes button:hover {
+    filter: brightness(0.95);
+}
+
+.search_bar input:focus, .input-mes input:focus {
+    outline: 2px solid rgb(70, 161, 211);
+}
+
+.info {
+    position: static;
+    top: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 5px 0 5px 10px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.info i {
+    position: absolute;
+    right: 20px;
+    font-size: 25px;
+    color: #83a4d4;
+}
+
+.chat-field {
+    height: 92%;
+    width: 100%;
+    margin: 0 auto;
+    overflow: auto;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    scroll-behavior: smooth;
+}
+
+.self_mes, .friend_mes {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.text_mes {
+    max-width: 350px;
+    line-height: 1.5;
+    padding: 5px 8px;
+    height: fit-content;
+    color: #ffff;
+    border-radius: 10px;
+    background-color: #22577E;
+}
+
+.avt {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.self_mes {
+    justify-content: flex-end;
+}
+
+.friend_mes {
+    justify-content: flex-start;
+}
