@@ -41,8 +41,8 @@ const refNewMess = ref(database, 'users/');
 onChildAdded(refNewMess, (snapshot) => {
     if (snapshot.val().name != myName) {
         let newBoxchat = `<div class="friend_mes" id="messField">
-                            <div class="text_mes">${snapshot.val().message}</div>
                             <img src="https://yt3.ggpht.com/ytc/AKedOLRAIbph_gdGzZ9tOuxxzrWJYHGXFLbBXDUVz6HE2w=s900-c-k-c0x00ffffff-no-rj" alt="" class="avt">
+                            <div class="text_mes">${snapshot.val().message}</div>
                         </div>
                         `;
         boxChat.innerHTML += newBoxchat;
