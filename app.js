@@ -14,7 +14,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase();
-//create app object
+
 var myName = prompt("Nhập tên của bạn");
 var frNameList = document.getElementById("nameFrlist");
 var frName = document.getElementById("nameFr");
@@ -34,6 +34,7 @@ function writeMes() {
         message: mes
     });
     controlInput.value = "";
+    controlInput.focus();
 }
 
 const refNewMess = ref(database, 'users/');
