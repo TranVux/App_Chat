@@ -109,6 +109,10 @@ body {
     font-size: 18px;
 }
 
+#inputMess {
+    height: 38px;
+}
+
 .right_content {
     position: relative;
     flex: 1;
@@ -211,4 +215,41 @@ body {
 
 .friend_mes {
     justify-content: flex-start;
+}
+
+.btn {
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+}
+
+.gg_login_btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#gg_btn_in, #gg_btn_out {
+    width: fit-content;
+    min-width: 130px;
+    height: 45px;
+    font-size: 18px;
+    text-transform: capitalize;
+    border: none;
+    outline: 3px solid transparent;
+    transition: all ease-in-out 0.15s;
+    background-color: #537eea;
+    color: white;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    cursor: pointer;
+}
+
+#gg_btn_in:focus {
+    outline: 3px solid #5aaae394;
+}
+
+#gg_btn_in:hover {
+    filter: brightness(0.95);
 }
