@@ -50,9 +50,7 @@ onAuthStateChanged(auth, (user) => {
         myName.innerText = user.displayName;
         myAvt.src = user.photoURL;
         photoURL = user.photoURL;
-        console.log(photoURL);
         userUID = user.uid;
-        console.log(userUID);
     } else {
         log_gg_btn.id = 'gg_btn_in';
         log_gg_btn = document.getElementById("gg_btn_in");
@@ -66,6 +64,8 @@ log_gg_btn.addEventListener('click', () => {
     if (log_gg_btn.id == 'gg_btn_out') {
         signOut(auth).then(() => {
             console.log('logout is successful');
+            userUID = '';
+            photoURL = 'https://thumbs.dreamstime.com/b/profile-placeholder-image-gray-silhouette-no-photo-person-avatar-default-pic-used-web-design-127393540.jpg'
         }).catch((error) => {
             console.log(error);
         });
@@ -92,6 +92,16 @@ function writeMes() {
     controlInput.focus();
 }
 
+sendBtn.addEventListener('click', writeMes);
+
+// Press Enter to send mess
+controlInput.addEventListener('keypress', (event) => {
+    if (event.keyCode == 13) {
+        writeMes();
+    }
+    return;
+});
+
 const refNewMess = ref(database, 'users/');
 
 onChildAdded(refNewMess, (snapshot) => {
@@ -114,8 +124,6 @@ onChildAdded(refNewMess, (snapshot) => {
     }
     boxChat.scrollTop = boxChat.scrollHeight;
 });
-
-sendBtn.addEventListener('click', writeMes);
 
 
 
