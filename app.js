@@ -103,6 +103,15 @@ function writeMes() {
 
 sendBtn.addEventListener('click', writeMes);
 
+function highlightUserContainer() {
+    let arrUserContainer = document.querySelectorAll(".name_friend");
+    arrUserContainer.forEach(element => {
+        if (element.innerHTML == myName) {
+            element.parentElement.classList.add("me");
+        }
+    });
+}
+
 // ref mess from database
 const refNewMess = ref(database, 'users/');
 
@@ -136,14 +145,14 @@ onChildAdded(refNewMess, (snapshot) => {
         listFriends.innerHTML += `<div class="friend_container" data-uid="${snapshot.val().uid}">
         <img src="${snapshot.val().photoURL}"
             alt="" id="myAvt">
-        <span class="name_friend" id="myName">${snapshot.val().name}</span>
+        <span class="name_friend">${snapshot.val().name}</span>
         </div>`;
     } else {
         if (!listFriends.textContent.includes(snapshot.val().name)) {
             listFriends.innerHTML += `<div class="friend_container" data-uid="${snapshot.val().uid}">
             <img src="${snapshot.val().photoURL}"
                 alt="" id="myAvt">
-            <span class="name_friend" id="myName">${snapshot.val().name}</span>
+            <span class="name_friend">${snapshot.val().name}</span>
             </div>`;
         }
     }
@@ -187,7 +196,10 @@ onChildAdded(refNewMess, (snapshot) => {
         }
     }
     boxChat.scrollTop = boxChat.scrollHeight;
+    highlightUserContainer();
 });
+
+//remove all wait box onLoad
 setTimeout(() => {
     boxChat = document.getElementById("boxChat");
     removeWaitBoxMess();
