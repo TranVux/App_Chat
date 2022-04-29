@@ -95,7 +95,7 @@ function writeMes() {
         name: name,
         message: mes,
         photoURL: photoURL,
-        isComposing: isComposing,
+        isComposing: isComposing
         // isRemove: isRemove
     });
     controlInput.value = "";
