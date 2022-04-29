@@ -88,6 +88,7 @@ function writeMes() {
     if (mes == '') return;
     const id = push(child(ref(database), 'users')).key;
     var name = myName;
+    isComposing = false;
     const refMess = ref(database, 'users/' + id);
     set(refMess, {
         uid: userUID,
