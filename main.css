@@ -207,6 +207,7 @@ body {
     color: #ffff;
     border-radius: 10px;
     background-color: #22577E;
+    word-wrap: break-word;
 }
 
 .avt {

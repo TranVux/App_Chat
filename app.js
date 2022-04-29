@@ -145,7 +145,7 @@ controlInput.addEventListener('keypress', (event) => {
 });
 
 // end typing function
-onChildAdded(refNewMess, (snapshot) => {
+onChildAdded(refNewMess, async (snapshot) => {
     var arrFriends = document.querySelectorAll(".friend_container");
     if (arrFriends.length == 0) {
         listFriends.innerHTML += `<div class="friend_container" data-uid="${snapshot.val().uid}">
@@ -204,6 +204,8 @@ onChildAdded(refNewMess, (snapshot) => {
     highlightUserContainer();
 });
 
-setTimeout(() => {
-    removeWaitBoxMess();
-}, 1700);
+function removeBoxWaitAwait() {
+    return new Promise(() => {
+        removeBoxWait();
+    });
+}
