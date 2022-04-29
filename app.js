@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
-import { getDatabase, set, ref, push, child, onValue, onChildAdded, onChildChanged, onChildRemoved } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+import { getDatabase, set, ref, push, update, child, onValue, onChildAdded, onChildChanged, onChildRemoved } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
 import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js";
 const firebaseConfig = {
     apiKey: "AIzaSyBHmL6QM_cqAAk5379gU-IOGXq7GF78Qsw",
@@ -25,6 +25,7 @@ var userUID = '';
 var frName = document.getElementById("nameFr");
 var controlInput = document.getElementById("inputMess");
 var isComposing = false;
+var isRemove = false;
 var sendBtn = document.getElementById("sendBtn");
 var boxChat = document.getElementById("boxChat");
 var listFriends = document.getElementById("listFriends");
@@ -42,7 +43,7 @@ log_gg_btn.addEventListener('click', () => {
         signInWithRedirect(auth, provider);
     }
 });
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
     if (user) {
         log_gg_btn.id = 'gg_btn_out';
         log_gg_btn = document.getElementById("gg_btn_out");
@@ -50,7 +51,7 @@ onAuthStateChanged(auth, (user) => {
         photoURL = user.photoURL;
         myName = user.displayName;
         userUID = user.uid;
-        console.log(userUID);
+        // console.log(userUID);
     } else {
         log_gg_btn.id = 'gg_btn_in';
         log_gg_btn = document.getElementById("gg_btn_in");
@@ -93,11 +94,13 @@ function writeMes() {
         name: name,
         message: mes,
         photoURL: photoURL,
-        isComposing: isComposing
+        isComposing: isComposing,
+        // isRemove: isRemove
     });
     controlInput.value = "";
     controlInput.focus();
     countTurn = 0;
+    // removeWaitBoxAccordingToName(myName);
     removeWaitBoxMess();
 }
 
@@ -124,6 +127,7 @@ controlInput.addEventListener('keypress', (event) => {
         countTurn++;
         if (countTurn == 1) {
             isComposing = true;
+            isRemove = false;
             var name = myName;
             const id = push(child(ref(database), 'users')).key;
             const refMess = ref(database, 'users/' + id);
@@ -132,7 +136,8 @@ controlInput.addEventListener('keypress', (event) => {
                 message: '',
                 name: name,
                 photoURL: photoURL,
-                isComposing: isComposing
+                isComposing: isComposing,
+                // isRemove: isRemove
             });
         }
     }
@@ -165,7 +170,6 @@ onChildAdded(refNewMess, (snapshot) => {
                         </div>
                         `;
             boxChat.innerHTML += newBoxchat;
-            // frNameList.innerText = snapshot.val().name;
             frName.innerText = snapshot.val().name;
             removeWaitBoxMess();
         } else {
@@ -199,10 +203,6 @@ onChildAdded(refNewMess, (snapshot) => {
     highlightUserContainer();
 });
 
-//remove all wait box onLoad
 setTimeout(() => {
-    boxChat = document.getElementById("boxChat");
     removeWaitBoxMess();
-}, 2500);
-
-
+}, 1700);
