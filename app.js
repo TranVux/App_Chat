@@ -26,6 +26,7 @@ var frName = document.getElementById("nameFr");
 var controlInput = document.getElementById("inputMess");
 var isComposing = false;
 var isRemove = false;
+var tempIdWaitMess = '';
 var sendBtn = document.getElementById("sendBtn");
 var boxChat = document.getElementById("boxChat");
 var listFriends = document.getElementById("listFriends");
@@ -101,7 +102,7 @@ function writeMes() {
     controlInput.value = "";
     controlInput.focus();
     countTurn = 0;
-    // removeWaitBoxAccordingToName(myName);
+    updateTempIdWaitMess(tempIdWaitMess);
     removeWaitBoxMess();
 }
 
@@ -131,6 +132,7 @@ controlInput.addEventListener('keypress', (event) => {
             isRemove = false;
             var name = myName;
             const id = push(child(ref(database), 'users')).key;
+            tempIdWaitMess = id;
             const refMess = ref(database, 'users/' + id);
             set(refMess, {
                 uid: userUID,
@@ -144,8 +146,15 @@ controlInput.addEventListener('keypress', (event) => {
     }
 });
 
+function updateTempIdWaitMess(tempId) {
+    const refuser = ref(database, 'users/' + tempId);
+    update(refuser, {
+        isComposing: false,
+    });
+}
+
 // end typing function
-onChildAdded(refNewMess, async (snapshot) => {
+onChildAdded(refNewMess, (snapshot) => {
     var arrFriends = document.querySelectorAll(".friend_container");
     if (arrFriends.length == 0) {
         listFriends.innerHTML += `<div class="friend_container" data-uid="${snapshot.val().uid}">
@@ -204,8 +213,4 @@ onChildAdded(refNewMess, async (snapshot) => {
     highlightUserContainer();
 });
 
-function removeBoxWaitAwait() {
-    return new Promise(() => {
-        removeBoxWait();
-    });
-}
+
