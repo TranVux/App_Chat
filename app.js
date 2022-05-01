@@ -19,7 +19,6 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 var myName = '';
-// var myAvt = document.getElementById("myAvt");
 var photoURL = 'https://thumbs.dreamstime.com/b/profile-placeholder-image-gray-silhouette-no-photo-person-avatar-default-pic-used-web-design-127393540.jpg';
 var userUID = '';
 var frName = document.getElementById("nameFr");
@@ -153,6 +152,12 @@ function updateTempIdWaitMess(tempId) {
     });
 }
 
+//auto update value of isComposing when tab closed
+controlInput.addEventListener('focus', () => {
+    window.addEventListener('beforeunload', () => {
+        updateTempIdWaitMess(tempIdWaitMess);
+    });
+});
 // end typing function
 onChildAdded(refNewMess, (snapshot) => {
     var arrFriends = document.querySelectorAll(".friend_container");
