@@ -116,8 +116,6 @@ function highlightUserContainer() {
     });
 }
 
-// ref mess from database
-const refNewMess = ref(database, 'users/');
 
 // Press Enter to send mess 
 // isComposing trả về true khi trong quá trình soạn thảo
@@ -159,7 +157,13 @@ controlInput.addEventListener('focus', () => {
     });
 });
 // end typing function
+
+
+// ref mess from database
+const refNewMess = ref(database, 'users/');
+
 onChildAdded(refNewMess, (snapshot) => {
+    // show friends list
     var arrFriends = document.querySelectorAll(".friend_container");
     if (arrFriends.length == 0) {
         listFriends.innerHTML += `<div class="friend_container" data-uid="${snapshot.val().uid}">
