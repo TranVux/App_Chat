@@ -164,6 +164,7 @@ controlInput.addEventListener("keypress", (event) => {
 });
 
 function updateTempIdWaitMess(tempId) {
+    console.log(tempId);
     const refuser = ref(database, "users/" + tempId);
     update(refuser, {
         isComposing: false
@@ -171,7 +172,7 @@ function updateTempIdWaitMess(tempId) {
 }
 
 //auto update value of isComposing when tab closed
-controlInput.addEventListener('focus', () => {
+controlInput.addEventListener('keypress', () => {
     if (controlInput.value != "") {
         window.addEventListener('beforeunload', () => {
             updateTempIdWaitMess(tempIdWaitMess);
