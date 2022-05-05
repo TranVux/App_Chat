@@ -1,10 +1,28 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
-import { getDatabase, set, ref, push, update, child, onValue, onChildAdded, onChildChanged, onChildRemoved } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
-import { getAuth, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js";
+import {
+    getDatabase,
+    set,
+    ref,
+    push,
+    update,
+    child,
+    onValue,
+    onChildAdded,
+    onChildChanged,
+    onChildRemoved
+} from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+import {
+    getAuth,
+    signInWithRedirect,
+    GoogleAuthProvider,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js";
 const firebaseConfig = {
     apiKey: "AIzaSyBHmL6QM_cqAAk5379gU-IOGXq7GF78Qsw",
     authDomain: "appchat-2910.firebaseapp.com",
-    databaseURL: "https://appchat-2910-default-rtdb.asia-southeast1.firebasedatabase.app",
+    databaseURL:
+        "https://appchat-2910-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "appchat-2910",
     storageBucket: "appchat-2910.appspot.com",
     messagingSenderId: "354945102753",
@@ -18,14 +36,15 @@ const database = getDatabase();
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-var myName = '';
-var photoURL = 'https://thumbs.dreamstime.com/b/profile-placeholder-image-gray-silhouette-no-photo-person-avatar-default-pic-used-web-design-127393540.jpg';
-var userUID = '';
+var myName = "";
+var photoURL =
+    "https://thumbs.dreamstime.com/b/profile-placeholder-image-gray-silhouette-no-photo-person-avatar-default-pic-used-web-design-127393540.jpg";
+var userUID = "";
 var frName = document.getElementById("nameFr");
 var controlInput = document.getElementById("inputMess");
 var isComposing = false;
 var isRemove = false;
-var tempIdWaitMess = '';
+var tempIdWaitMess = "";
 var sendBtn = document.getElementById("sendBtn");
 var boxChat = document.getElementById("boxChat");
 var listFriends = document.getElementById("listFriends");
@@ -38,14 +57,14 @@ var countTurn = 0; //Count the mess typing
     get user info from AUTH
 
 */
-log_gg_btn.addEventListener('click', () => {
-    if (log_gg_btn.id == 'gg_btn_in') {
+log_gg_btn.addEventListener("click", () => {
+    if (log_gg_btn.id == "gg_btn_in") {
         signInWithRedirect(auth, provider);
     }
 });
 onAuthStateChanged(auth, async (user) => {
     if (user) {
-        log_gg_btn.id = 'gg_btn_out';
+        log_gg_btn.id = "gg_btn_out";
         log_gg_btn = document.getElementById("gg_btn_out");
         log_gg_btn.innerText = `Logout`;
         photoURL = user.photoURL;
@@ -53,23 +72,25 @@ onAuthStateChanged(auth, async (user) => {
         userUID = user.uid;
         // console.log(userUID);
     } else {
-        log_gg_btn.id = 'gg_btn_in';
+        log_gg_btn.id = "gg_btn_in";
         log_gg_btn = document.getElementById("gg_btn_in");
         log_gg_btn.innerText = `Sign In with google`;
         myName.innerText = `guest ${Math.floor(Math.random() * 9999)}`;
-        myAvt.src = `https://thumbs.dreamstime.com/b/profile-placeholder-image-gray-silhouette-no-photo-person-avatar-default-pic-used-web-design-127393540.jpg`;
     }
 });
-log_gg_btn.addEventListener('click', () => {
-    if (log_gg_btn.id == 'gg_btn_out') {
-        signOut(auth).then(() => {
-            console.log('logout is successful');
-            userUID = '';
-            photoURL = 'https://thumbs.dreamstime.com/b/profile-placeholder-image-gray-silhouette-no-photo-person-avatar-default-pic-used-web-design-127393540.jpg'
-            window.location.reload();
-        }).catch((error) => {
-            console.log(error);
-        });
+log_gg_btn.addEventListener("click", () => {
+    if (log_gg_btn.id == "gg_btn_out") {
+        signOut(auth)
+            .then(() => {
+                console.log("logout is successful");
+                userUID = "";
+                photoURL =
+                    "https://thumbs.dreamstime.com/b/profile-placeholder-image-gray-silhouette-no-photo-person-avatar-default-pic-used-web-design-127393540.jpg";
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 });
 
@@ -77,19 +98,19 @@ log_gg_btn.addEventListener('click', () => {
 
 // send and get mess
 function removeWaitBoxMess() {
-    let arrBoxWait = document.querySelectorAll('.friend_mes_wait');
-    arrBoxWait.forEach(element => {
+    let arrBoxWait = document.querySelectorAll(".friend_mes_wait");
+    arrBoxWait.forEach((element) => {
         boxChat.removeChild(element);
-    })
+    });
 }
 
 function writeMes() {
     var mes = controlInput.value;
-    if (mes == '') return;
-    const id = push(child(ref(database), 'users')).key;
+    if (mes == "") return;
+    const id = push(child(ref(database), "users")).key;
     var name = myName;
     isComposing = false;
-    const refMess = ref(database, 'users/' + id);
+    const refMess = ref(database, "users/" + id);
     set(refMess, {
         uid: userUID,
         name: name,
@@ -105,22 +126,21 @@ function writeMes() {
     removeWaitBoxMess();
 }
 
-sendBtn.addEventListener('click', writeMes);
+sendBtn.addEventListener("click", writeMes);
 
 function highlightUserContainer() {
     let arrUserContainer = document.querySelectorAll(".name_friend");
-    arrUserContainer.forEach(element => {
+    arrUserContainer.forEach((element) => {
         if (element.innerHTML == myName) {
             element.parentElement.classList.add("me");
         }
     });
 }
 
-
-// Press Enter to send mess 
+// Press Enter to send mess
 // isComposing trả về true khi trong quá trình soạn thảo
-controlInput.addEventListener('keypress', (event) => {
-    if (event.key == 'Enter') {
+controlInput.addEventListener("keypress", (event) => {
+    if (event.key == "Enter") {
         writeMes();
     } else {
         countTurn++;
@@ -128,15 +148,15 @@ controlInput.addEventListener('keypress', (event) => {
             isComposing = true;
             isRemove = false;
             var name = myName;
-            const id = push(child(ref(database), 'users')).key;
+            const id = push(child(ref(database), "users")).key;
             tempIdWaitMess = id;
-            const refMess = ref(database, 'users/' + id);
+            const refMess = ref(database, "users/" + id);
             set(refMess, {
                 uid: userUID,
-                message: '',
+                message: "",
                 name: name,
                 photoURL: photoURL,
-                isComposing: isComposing,
+                isComposing: isComposing
                 // isRemove: isRemove
             });
         }
@@ -144,9 +164,9 @@ controlInput.addEventListener('keypress', (event) => {
 });
 
 function updateTempIdWaitMess(tempId) {
-    const refuser = ref(database, 'users/' + tempId);
+    const refuser = ref(database, "users/" + tempId);
     update(refuser, {
-        isComposing: false,
+        isComposing: false
     });
 }
 
@@ -160,22 +180,23 @@ controlInput.addEventListener('focus', () => {
 });
 // end typing function
 
-
 // ref mess from database
-const refNewMess = ref(database, 'users/');
+const refNewMess = ref(database, "users/");
 
 onChildAdded(refNewMess, (snapshot) => {
     // show friends list
     var arrFriends = document.querySelectorAll(".friend_container");
     if (arrFriends.length == 0) {
-        listFriends.innerHTML += `<div class="friend_container" data-uid="${snapshot.val().uid}">
+        listFriends.innerHTML += `<div class="friend_container" data-uid="${snapshot.val().uid
+            }">
         <img src="${snapshot.val().photoURL}"
             alt="" id="myAvt">
         <span class="name_friend">${snapshot.val().name}</span>
         </div>`;
     } else {
         if (!listFriends.textContent.includes(snapshot.val().name)) {
-            listFriends.innerHTML += `<div class="friend_container" data-uid="${snapshot.val().uid}">
+            listFriends.innerHTML += `<div class="friend_container" data-uid="${snapshot.val().uid
+                }">
             <img src="${snapshot.val().photoURL}"
                 alt="" id="myAvt">
             <span class="name_friend">${snapshot.val().name}</span>
@@ -184,10 +205,12 @@ onChildAdded(refNewMess, (snapshot) => {
     }
     // show mess
     if (snapshot.val().uid != userUID) {
-        if (snapshot.val().message != '') {
+        if (snapshot.val().message != "") {
             let newBoxchat = `<div class="friend_mes" id="messField">
-                            <img src="${snapshot.val().photoURL}" alt="" class="avt">
-                            <div class="text_mes">${snapshot.val().message}</div>
+                            <img src="${snapshot.val().photoURL
+                }" alt="" class="avt">
+                            <div class="text_mes">${snapshot.val().message
+                }</div>
                         </div>
                         `;
             boxChat.innerHTML += newBoxchat;
@@ -196,7 +219,8 @@ onChildAdded(refNewMess, (snapshot) => {
         } else {
             if (snapshot.val().isComposing == true) {
                 let newWaitBoxChat = `
-                <div data-uid="${snapshot.val().uid}" class="friend_mes friend_mes_wait">
+                <div data-uid="${snapshot.val().uid
+                    }" class="friend_mes friend_mes_wait">
                     <img src="${snapshot.val().photoURL}"
                         alt="" class="avt">
                     <div class="text_mes">
@@ -205,13 +229,13 @@ onChildAdded(refNewMess, (snapshot) => {
                         <i class="fa-solid fa-circle"></i>
                     </div>
                 </div>
-                `
+                `;
                 boxChat.innerHTML += newWaitBoxChat;
                 boxChat.scrollTop = boxChat.scrollHeight;
             }
         }
     } else {
-        if (snapshot.val().message != '') {
+        if (snapshot.val().message != "") {
             let newBoxchat = `<div class="self_mes" id="messField">
             <div class="text_mes">${snapshot.val().message}</div>
             <img src="${snapshot.val().photoURL}" alt="" class="avt">
@@ -223,5 +247,3 @@ onChildAdded(refNewMess, (snapshot) => {
     boxChat.scrollTop = boxChat.scrollHeight;
     highlightUserContainer();
 });
-
-

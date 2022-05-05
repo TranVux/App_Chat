@@ -53,8 +53,6 @@ body {
     border-radius: 2px;
 }
 
-::-webkit-scrollbar-track {}
-
 .left_content, .right_content {
     height: 500px;
     min-height: 500px;
