@@ -152,9 +152,11 @@ function updateTempIdWaitMess(tempId) {
 
 //auto update value of isComposing when tab closed
 controlInput.addEventListener('focus', () => {
-    window.addEventListener('beforeunload', () => {
-        updateTempIdWaitMess(tempIdWaitMess);
-    });
+    if (controlInput.value != "") {
+        window.addEventListener('beforeunload', () => {
+            updateTempIdWaitMess(tempIdWaitMess);
+        });
+    }
 });
 // end typing function
 
